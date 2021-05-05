@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.NAP.SPU.TestConsole", "..\Fanex.NAP.SPU.TestConsole\Fanex.NAP.SPU.TestConsole.csproj", "{8A9C1DD5-EA30-404D-AC30-5A4F4AFA9661}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fanex.NAP.SPU.AspNetCore.Notification", "Fanex.NAP.SPU.AspNetCore.Notification\Fanex.NAP.SPU.AspNetCore.Notification.csproj", "{B42A3A7E-23E2-4456-AD9A-20521D782A6D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.NetFramework.Notification", "Fanex.NAP.SPU.NetFramework.Notification\Fanex.NAP.SPU.NetFramework.Notification.csproj", "{2E9A8A44-AEFE-44B0-B124-B7679FBC7A3E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.Notification.Services", "Fanex.NAP.SPU.Notification.Services\Fanex.NAP.SPU.Notification.Services.csproj", "{053E8B6F-968D-4905-AE64-F4710E000543}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fanex.NAP.SPU.NetFrameWork.TestConsole", "Fanex.NAP.SPU.NetFrameWork.TestConsole\Fanex.NAP.SPU.NetFrameWork.TestConsole.csproj", "{87601771-4C15-406D-A8D7-26B8310683FA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8A9C1DD5-EA30-404D-AC30-5A4F4AFA9661}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A9C1DD5-EA30-404D-AC30-5A4F4AFA9661}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A9C1DD5-EA30-404D-AC30-5A4F4AFA9661}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A9C1DD5-EA30-404D-AC30-5A4F4AFA9661}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B42A3A7E-23E2-4456-AD9A-20521D782A6D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B42A3A7E-23E2-4456-AD9A-20521D782A6D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B42A3A7E-23E2-4456-AD9A-20521D782A6D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B42A3A7E-23E2-4456-AD9A-20521D782A6D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E9A8A44-AEFE-44B0-B124-B7679FBC7A3E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E9A8A44-AEFE-44B0-B124-B7679FBC7A3E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E9A8A44-AEFE-44B0-B124-B7679FBC7A3E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E9A8A44-AEFE-44B0-B124-B7679FBC7A3E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{053E8B6F-968D-4905-AE64-F4710E000543}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{053E8B6F-968D-4905-AE64-F4710E000543}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{053E8B6F-968D-4905-AE64-F4710E000543}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{053E8B6F-968D-4905-AE64-F4710E000543}.Release|Any CPU.Build.0 = Release|Any CPU
+		{87601771-4C15-406D-A8D7-26B8310683FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{87601771-4C15-406D-A8D7-26B8310683FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{87601771-4C15-406D-A8D7-26B8310683FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{87601771-4C15-406D-A8D7-26B8310683FA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1BAA4ABB-69C4-41BD-9E29-E1278176022E}
+	EndGlobalSection
+EndGlobal
