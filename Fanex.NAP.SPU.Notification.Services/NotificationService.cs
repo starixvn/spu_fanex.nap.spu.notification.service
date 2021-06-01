@@ -9,7 +9,7 @@ namespace Fanex.NAP.SPU.Notification.Services
     {
         private MessageModel _messageModel;
         private string _token;
-        private string _groupId;        
+        private string _groupId;
 
         private static DateTime LastTime { get; set; }
         private static string LastMessage { get; set; }
@@ -17,7 +17,7 @@ namespace Fanex.NAP.SPU.Notification.Services
 
 
         public NotificationService Message(MessageModel messageModel)
-        {            
+        {
             if (messageModel != null)
             {
                 _messageModel = messageModel;
@@ -48,13 +48,13 @@ namespace Fanex.NAP.SPU.Notification.Services
             return this;
         }
 
-        public void SendWithDelay(int delayInSecond = 0)
-        {            
-            if(delayInSecond != 0)
+        public void SendWithDelay(int delayInSecond = 0, bool isInfo = false)
+        {
+            if (delayInSecond != 0)
             {
                 var second = (DateTime.Now - LastTime).TotalSeconds;
 
-                if(second >= delayInSecond)
+                if (second >= delayInSecond)
                 {
                     if (_messageModel.Message != LastMessage)
                     {
@@ -63,49 +63,87 @@ namespace Fanex.NAP.SPU.Notification.Services
 
                     if (Counter == 0 || (_messageModel.Message == LastMessage && Counter < 3))
                     {
-                        var result = SendMessage();
+                        var result = isInfo ? SendMessageInfo() : SendMessageError();
 
                         if (result)
                         {
                             LastTime = DateTime.Now;
                             LastMessage = _messageModel.Message;
-                            Counter++;                          
-                            
+                            Counter++;
+
                         }
-                    }                   
+                    }
                 }
-            }                      
+            }
         }
 
-        public void SendWithoutDelay()
+        public void SendWithoutDelay(bool isInfo = false)
         {
-            SendMessage();            
+            if (isInfo)
+            {
+                SendMessageInfo();
+            }
+            else
+            {
+                SendMessageError();
+            }
         }
 
-        private bool SendMessage()
+        private bool SendMessageError()
         {
             var message = new StringBuilder();
-                        
+
             message.Append("\U0001F525 ERROR \U0001F525 in `[`**" + _messageModel.SystemName + "**`]`");
             message.Append("\n\r");
-            message.Append("**Environment**: ");            
+            message.Append("**Environment**: ");
             message.Append(_messageModel.Environment);
-            message.Append("\n\r");            
+            message.Append("\n\r");
             message.Append("**Timestamp(GMT%2B7)**: ");
             message.Append(_messageModel.Timestamp);
             message.Append("\n\r");
             message.Append("**Message**: ");
             message.Append(_messageModel.Message);
 
-            if(!string.IsNullOrWhiteSpace(_messageModel.MoreInfo))
+            if (!string.IsNullOrWhiteSpace(_messageModel.MoreInfo))
             {
                 message.Append("\n\r");
                 message.Append("**More Info**: ");
                 message.Append(_messageModel.MoreInfo);
-            }            
+            }
 
-            var client = new RestClient($"https://bot.nexdev.net/skynex/api/messages/forwardwithtoken?token={_token}&message={message.ToString()}&conversationId={_groupId}");            
-            
+            var client = new RestClient($"https://bot.nexdev.net/skynex/api/messages/forwardwithtoken?token={_token}&message={message.ToString()}&conversationId={_groupId}");
+
+            var request = new RestRequest(Method.POST);
+
+            ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+
+            return client.Execute(request).StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        private bool SendMessageInfo()
+        {
+            var message = new StringBuilder();
+
+            message.Append("\U0001F525 INFO \U0001F525 in `[`**" + _messageModel.SystemName + "**`]`");
+            message.Append("\n\r");
+            message.Append("**Environment**: ");
+            message.Append(_messageModel.Environment);
+            message.Append("\n\r");
+            message.Append("**Timestamp(GMT%2B7)**: ");
+            message.Append(_messageModel.Timestamp);
+            message.Append("\n\r");
+            message.Append("**Message**: ");
+            message.Append(_messageModel.Message);
+
+            if (!string.IsNullOrWhiteSpace(_messageModel.MoreInfo))
+            {
+                message.Append("\n\r");
+                message.Append("**More Info**: ");
+                message.Append(_messageModel.MoreInfo);
+            }
+
+            var client = new RestClient($"https://bot.nexdev.net/skynex/api/messages/forwardwithtoken?token={_token}&message={message.ToString()}&conversationId={_groupId}");
+
             var request = new RestRequest(Method.POST);
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
