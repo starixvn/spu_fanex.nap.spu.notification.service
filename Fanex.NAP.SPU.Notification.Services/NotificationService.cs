@@ -10,6 +10,7 @@ namespace Fanex.NAP.SPU.Notification.Services
         private MessageModel _messageModel;
         private string _token;
         private string _groupId;
+        private string _apiUrl;
 
         private static DateTime LastTime { get; set; }
         private static string LastMessage { get; set; }
@@ -30,10 +31,18 @@ namespace Fanex.NAP.SPU.Notification.Services
             return this;
         }
 
-        public NotificationService Config(string token = null, string groupId = null)
+        /// <summary>
+        /// Config telegram api setting.
+        /// </summary>
+        /// <param name="token">Set token or add appsetting with key telegram-token</param>
+        /// <param name="groupId">Set token or add appsetting with key telegram-id</param>
+        /// <param name="apiUrl">Set token or add appsetting with key telegram-api-url</param>
+        /// <returns></returns>
+        public NotificationService Config(string token = null, string groupId = null, string apiUrl = null)
         {
             _token = token ?? AppSetting.TelegramToken;
             _groupId = groupId ?? AppSetting.TelegramId;
+            _apiUrl = apiUrl ?? AppSetting.ApiUrl;
 
             if (string.IsNullOrWhiteSpace(_token))
             {
@@ -45,9 +54,19 @@ namespace Fanex.NAP.SPU.Notification.Services
                 throw new ArgumentException("Group Id cannot be null", nameof(groupId));
             }
 
+            if (string.IsNullOrWhiteSpace(_apiUrl))
+            {
+                throw new ArgumentException("API Url cannot be null", nameof(apiUrl));
+            }
+
             return this;
         }
 
+        /// <summary>
+        /// Send message with delay in second
+        /// </summary>
+        /// <param name="delayInSecond">Delay time in second</param>
+        /// <param name="isInfo">The type of message(info or error)</param>
         public void SendWithDelay(int delayInSecond = 0, bool isInfo = false)
         {
             if (delayInSecond != 0)
@@ -77,6 +96,10 @@ namespace Fanex.NAP.SPU.Notification.Services
             }
         }
 
+        /// <summary>
+        /// Send message without delay time
+        /// </summary>
+        /// <param name="isInfo">Type of message(info or error)</param>
         public void SendWithoutDelay(bool isInfo = false)
         {
             if (isInfo)
@@ -111,7 +134,7 @@ namespace Fanex.NAP.SPU.Notification.Services
                 message.Append(_messageModel.MoreInfo);
             }
 
-            var client = new RestClient($"https://bot.nexdev.net/skynex/api/messages/forwardwithtoken?token={_token}&message={message.ToString()}&conversationId={_groupId}");
+            var client = new RestClient($"{_apiUrl}?token={_token}&message={message.ToString()}&conversationId={_groupId}");
 
             var request = new RestRequest(Method.POST);
 
@@ -141,8 +164,8 @@ namespace Fanex.NAP.SPU.Notification.Services
                 message.Append("**More Info**: ");
                 message.Append(_messageModel.MoreInfo);
             }
-
-            var client = new RestClient($"https://bot.nexdev.net/skynex/api/messages/forwardwithtoken?token={_token}&message={message.ToString()}&conversationId={_groupId}");
+            //https://bot.nexdev.net/skynex/api/messages/forwardwithtoken
+            var client = new RestClient($"{_apiUrl}?token={_token}&message={message.ToString()}&conversationId={_groupId}");
 
             var request = new RestRequest(Method.POST);
 
