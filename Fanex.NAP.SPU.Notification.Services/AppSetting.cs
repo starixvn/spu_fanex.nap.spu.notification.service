@@ -10,5 +10,7 @@ namespace Fanex.NAP.SPU.Notification.Services
 
         public static string ApiUrl => ConfigurationManager.AppSettings["telegram-api-url"] ?? "";
 
+        public static string TelegramProxy => ConfigurationManager.AppSettings["telegram-proxy"] ?? "";
+
     }
 }

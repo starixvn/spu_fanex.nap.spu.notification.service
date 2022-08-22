@@ -11,6 +11,7 @@ namespace Fanex.NAP.SPU.Notification.Services
         private string _token;
         private string _groupId;
         private string _apiUrl;
+        private string _proxy;
 
         private static DateTime LastTime { get; set; }
         private static string LastMessage { get; set; }
@@ -38,11 +39,12 @@ namespace Fanex.NAP.SPU.Notification.Services
         /// <param name="groupId">Set token or add appsetting with key telegram-id</param>
         /// <param name="apiUrl">Set token or add appsetting with key telegram-api-url</param>
         /// <returns></returns>
-        public NotificationService Config(string token = null, string groupId = null, string apiUrl = null)
+        public NotificationService Config(string token = null, string groupId = null, string apiUrl = null, string proxy = null)
         {
             _token = token ?? AppSetting.TelegramToken;
             _groupId = groupId ?? AppSetting.TelegramId;
             _apiUrl = apiUrl ?? AppSetting.ApiUrl;
+            _proxy = proxy ?? AppSetting.TelegramProxy;
 
             if (string.IsNullOrWhiteSpace(_token))
             {
@@ -136,6 +138,12 @@ namespace Fanex.NAP.SPU.Notification.Services
 
             var client = new RestClient($"{_apiUrl}?token={_token}&message={message.ToString()}&conversationId={_groupId}");
 
+            if (!string.IsNullOrEmpty(_proxy))
+            {
+                var proxy = new WebProxy(_proxy);
+                client.Proxy = proxy;
+            }
+
             var request = new RestRequest(Method.POST);
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
@@ -166,6 +174,12 @@ namespace Fanex.NAP.SPU.Notification.Services
             }
             //https://bot.nexdev.net/skynex/api/messages/forwardwithtoken
             var client = new RestClient($"{_apiUrl}?token={_token}&message={message.ToString()}&conversationId={_groupId}");
+
+            if (!string.IsNullOrEmpty(_proxy))
+            {
+                var proxy = new WebProxy(_proxy);
+                client.Proxy = proxy;
+            }
 
             var request = new RestRequest(Method.POST);
 
